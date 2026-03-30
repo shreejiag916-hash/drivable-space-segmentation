@@ -40,3 +40,23 @@ python model.py
 
 ## 🏆 Hackathon
 MAHE Mobility Hackathon — Track 2: Real-time Drivable Space Detection
+
+
+## ⚙️ Setup & Installation
+```bash
+# Clone the repository
+git clone https://github.com/shreejiag916-hash/drivable-space-segmentation.git
+cd drivable-space-segmentation
+
+# Install dependencies
+pip install torch torchvision opencv-python albumentations
+```
+
+## 🖼️ Example Output
+
+The model produces pixel-level segmentation masks with 3 classes:
+- **Black** — Background (non-drivable)
+- **Green** — Main drivable road
+- **Blue** — Alternative drivable area
+
+Achieves **77.3 FPS** on NVIDIA T4 GPU — well above the 30fps real-time threshold.
