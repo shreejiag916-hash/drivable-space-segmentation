@@ -91,46 +91,4 @@ if __name__ == "__main__":
         print("Example: python inference.py samples/road.jpg")
     else:
         run_inference(sys.argv[1])
-```
-
-6. Scroll down, click **"Commit new file"** (green button)
-
----
-
-### 🔴 STEP 3 — Upload the trained model file
-
-The `.pth` file is probably too large for GitHub (>100MB). Here's what to do:
-
-**Option A — Upload to Google Drive (Recommended):**
-1. Go to drive.google.com
-2. Upload the `best_model.pth` file
-3. Right-click it → "Share" → "Anyone with the link can view"
-4. Copy the link
-
-**Option B — If the file is small (<100MB):**
-1. In your GitHub repo, click **"Add file" → "Upload files"**
-2. Drag and drop `best_model.pth`
-3. Click **"Commit changes"**
-
----
-
-### 🔴 STEP 4 — Add sample road images to the repo
-
-1. Download 2-3 road images from Google Images (search "dashcam road image")
-2. Save them as `road1.jpg`, `road2.jpg`, `road3.jpg`
-3. In your GitHub repo, click **"Add file" → "Upload files"**
-4. Upload all 3 images
-5. Click **"Commit changes"**
-
----
-
-### 🟡 STEP 5 — Create `requirements.txt`
-
-Same steps as creating `inference.py` but name the file `requirements.txt` and paste this:
-```
-torch
-torchvision
-opencv-python
-albumentations
-matplotlib
-numpy
+        
