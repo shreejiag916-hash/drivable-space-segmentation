@@ -1,5 +1,5 @@
 # 🚗 Real-time Drivable Space Segmentation
-
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/shreejiag916-hash/drivable-space-segmentation/blob/main/train_and_infer.ipynb)s
 > **MAHE Mobility Hackathon 2026 · Track 01 (AI in Mobility) · Problem Statement 2**  
 > Built in collaboration with **Harman Automotive**
 
