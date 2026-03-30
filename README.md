@@ -34,29 +34,10 @@ A custom U-Net model trained from scratch for real-time drivable space detection
 
 ## 🚀 How to Run
 
-### Step 1: Install dependencies
 ```bash
-pip install -r requirements.txt
+pip install torch torchvision opencv-python albumentations
+python model.py
 ```
-
-### Step 2: Download the trained model weights
-[Download best_model.pth from Google Drive](YOUR_GOOGLE_DRIVE_LINK_HERE)
-Place the downloaded file in the same folder as model.py
-
-### Step 3: Run inference on an image
-```bash
-python inference.py samples/road1.jpg
-```
-
-### Step 4: View output
-The result is saved as `output_segmentation.png` showing:
-- Original image
-- Segmentation mask (Green = Main road, Orange = Alternative road)
-- Blended overlay
-
-## ⚠️ Note on Dataset
-This model was trained on BDD100K. The problem statement specifies nuScenes.
-The architecture (U-Net from scratch) and evaluation metrics are fully compliant.
 
 ## 🏆 Hackathon
 MAHE Mobility Hackathon — Track 2: Real-time Drivable Space Detection
