@@ -1,62 +1,64 @@
-# 🚗 Real-time Drivable Space Segmentation
+# 🚗 MAHE Hackathon 2026: Real-time Drivable Space Segmentation
 
-A custom U-Net model trained from scratch for real-time drivable space detection using the BDD100K dataset.
+This repo provides a **train-from-scratch** semantic segmentation pipeline for the hackathon track **“Real-time Drivable Space Segmentation”** (drivable vs non-drivable).  
+The track requires **no pre-trained model weights** (our model is a small custom U-Net with randomly initialized layers).
 
-## 📊 Results
-| Metric | Value |
-|--------|-------|
-| Best mIoU | 0.6181 |
-| FPS | 77.3 |
-| Inference time | 12.93 ms/frame |
-| Parameters | 7,763,107 |
+## What you get
+- `train.py`: trains the model and writes `outputs/metrics.json` (includes best validation `mIoU`) and saves `outputs/checkpoints/best.pt`
+- `infer.py`: runs inference on an image folder and saves visual masks to an output folder
+- Clean metrics + checkpoints so you can link working code in your submission PPT
 
-## 🏗️ Architecture
-- **Encoder:** 4x EncoderBlocks (3→32→64→128→256)
-- **Bottleneck:** 512 channels
-- **Decoder:** 4x DecoderBlocks with skip connections
-- **Loss:** Dice + CrossEntropy (combined)
-- **Optimizer:** AdamW (lr=1e-3)
-- **Scheduler:** CosineAnnealingLR
+## Dataset format (you must adapt from the provided nuScenes package)
+The code expects a segmentation-style folder where **image filenames and mask filenames share the same stem**.
 
-## 📁 Dataset
-- **Dataset:** BDD100K (External)
-- **Train samples:** 2,380
-- **Val samples:** 596
-- **Image size:** 256×512
-- **Epochs:** 25 | **Batch size:** 8
+Example:
 
-## 🏷️ Classes
-| Class | Pixel Value |
-|-------|-------------|
-| Background | 0 |
-| Drivable (main) | 127 |
-| Drivable (alternative) | 191 |
-
-## 🚀 How to Run
-```bash
-pip install torch torchvision opencv-python albumentations
-python model.py
+```text
+dataset/
+  train/
+    images/000001.jpg
+    masks/000001.png
+  val/
+    images/000101.jpg
+    masks/000101.png
 ```
 
-## 🏆 Hackathon
-MAHE Mobility Hackathon — Track 2: Real-time Drivable Space Detection
+Mask pixel mapping:
+- Default is **binary**: any mask pixel value listed in `--binary-foreground-values` becomes class `1` (drivable); everything else becomes class `0`.
+- If your provided masks are already 0/1, keep the default.
 
-
-## ⚙️ Setup & Installation
+## Install
 ```bash
-# Clone the repository
-git clone https://github.com/shreejiag916-hash/drivable-space-segmentation.git
-cd drivable-space-segmentation
-
-# Install dependencies
-pip install torch torchvision opencv-python albumentations
+pip install -r requirements.txt
 ```
 
-## 🖼️ Example Output
+## Train
+```bash
+python train.py ^
+  --train-img-dir "PATH_TO_TRAIN_IMAGES" ^
+  --train-mask-dir "PATH_TO_TRAIN_MASKS" ^
+  --val-img-dir "PATH_TO_VAL_IMAGES" ^
+  --val-mask-dir "PATH_TO_VAL_MASKS" ^
+  --num-classes 2 ^
+  --binary-foreground-values "1" ^
+  --img-height 256 --img-width 512 ^
+  --epochs 10 --batch-size 4 ^
+  --save-dir outputs
+```
 
-The model produces pixel-level segmentation masks with 3 classes:
-- **Black** — Background (non-drivable)
-- **Green** — Main drivable road
-- **Blue** — Alternative drivable area
+If your drivable pixels are not `1`, set `--binary-foreground-values` to the correct values from your masks.
 
-Achieves **77.3 FPS** on NVIDIA T4 GPU — well above the 30fps real-time threshold.
+## Inference (for PPT screenshots)
+```bash
+python infer.py ^
+  --checkpoint "outputs/checkpoints/best.pt" ^
+  --input-img-dir "PATH_TO_VAL_IMAGES" ^
+  --output-dir "outputs/preds"
+```
+
+## Hackathon notes
+- The track’s primary metric is **mIoU** and it also evaluates **FPS/inference speed**.
+- Code output to include in your submission:
+  - `outputs/metrics.json`
+  - `outputs/checkpoints/best.pt`
+  - a few `outputs/preds/*.png` visualizations

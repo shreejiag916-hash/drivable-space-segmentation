@@ -1,0 +1,25 @@
+# Model weights
+*.pth
+*.pt
+*.ckpt
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+venv/
+env/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Datasets
+data/
+datasets/ 
